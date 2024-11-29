@@ -87,7 +87,7 @@
         }
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-28.240749085499385,-48.66845269315724],[-28.220676796952578,-48.63170938691524]]);
+        }).fitBounds([[-28.240749085499385,-48.66731494410477],[-28.220676796952578,-48.632847135967715]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -557,7 +557,7 @@
                 weight: 2.0, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(37,71,62,0.25098039215686274)',
+                fillColor: 'rgba(210,229,224,0.25098039215686274)',
                 interactive: true,
             }
         }
@@ -1803,7 +1803,7 @@
                         <td class="visible-with-data" id="Nome">' + (feature.properties['Nome'] !== null ? autolinker.link(feature.properties['Nome'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Proprietar</th>\
+                        <th scope="row">Proprietário</th>\
                         <td class="visible-with-data" id="Proprietar">' + (feature.properties['Proprietar'] !== null ? autolinker.link(feature.properties['Proprietar'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
@@ -2711,10 +2711,6 @@
                         <td class="visible-with-data" id="NumContra">' + (feature.properties['NumContra'] !== null ? autolinker.link(feature.properties['NumContra'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Arrendatário Original </th>\
-                        <td class="visible-with-data" id="ArrendOrig">' + (feature.properties['ArrendOrig'] !== null ? autolinker.link(feature.properties['ArrendOrig'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
                         <th scope="row">Arrendatário Atual </th>\
                         <td class="visible-with-data" id="ArrenAtual">' + (feature.properties['ArrenAtual'] !== null ? autolinker.link(feature.properties['ArrenAtual'].toLocaleString()) : '') + '</td>\
                     </tr>\
@@ -2807,10 +2803,6 @@
                     <tr>\
                         <th scope="row">Número do Contrato </th>\
                         <td class="visible-with-data" id="NumContra">' + (feature.properties['NumContra'] !== null ? autolinker.link(feature.properties['NumContra'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Arrendatário Original </th>\
-                        <td class="visible-with-data" id="ArrendOrig">' + (feature.properties['ArrendOrig'] !== null ? autolinker.link(feature.properties['ArrendOrig'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Arrendatário Atual</th>\
@@ -3336,6 +3328,29 @@
             }  
         });       
         setBounds();
+        var i = 0;
+        layer_reasArrendadasSituaoAtual_35.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Nome'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['Nome']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_reasArrendadasSituaoAtual_35'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_reasArrendadasSituaoAtual_35]);
+        map.on("zoomend", function(){
+            resetLabels([layer_reasArrendadasSituaoAtual_35]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_reasArrendadasSituaoAtual_35]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_reasArrendadasSituaoAtual_35]);
+        });
         </script>
     </body>
 </html>
